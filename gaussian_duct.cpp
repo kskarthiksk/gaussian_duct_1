@@ -21,7 +21,6 @@ void GaussianDuct::initialize_matrix()
     B = sin(gamma * z) / (n0 * gamma);
     C = -(n0 * gamma) * sin(gamma * z);
     D = cos(gamma * z);
-    cout<<A<<' '<<B<<' '<<C<<' '<<D;
 }
 
 std::complex<double> GaussianDuct::propagate(std::complex<double> qin)

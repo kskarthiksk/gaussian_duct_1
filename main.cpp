@@ -52,7 +52,7 @@ int main()
     complex<double> q = z + 1i * zR;
 
     // TransferMatrix object
-    GaussianDuct duct = GaussianDuct(n0, n2, z);
+    GaussianDuct duct = GaussianDuct(n0, n2, duct_length);
 
     // filestream for storing output (q parameter and beam waist at output)
     fstream fout;
