@@ -1,6 +1,6 @@
 n0	1.6
-n2	0.2
-duct_length	10
+n2	100
+duct_length	1000e-6
 wavelength	500e-09
 iterations	20
 w0	200e-6

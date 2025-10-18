@@ -1,4 +1,5 @@
-#include "transfer_matrix.hpp"
+#include "gaussian_duct.hpp"
+#include "gaussian_beam.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -51,7 +52,7 @@ int main()
     complex<double> q = z + 1i * zR;
 
     // TransferMatrix object
-    TransferMatrix transferMatrix = TransferMatrix(n0, n2);
+    GaussianDuct duct = GaussianDuct(n0, n2, z);
 
     // filestream for storing output (q parameter and beam waist at output)
     fstream fout;
@@ -69,14 +70,12 @@ int main()
 
     // adding initial values to file
     fout<<q_out.real()<<','<<q_out.imag()<<","<<w0<<'\n';
-    // fout<<q_out<<","<<w0<<'\n';
-
+    
     for(int i = 0; i < iter; ++i)
     {
-        q_out = transferMatrix.propagate(duct_length, q_out);
-        w = transferMatrix.beam_waist(0, wavelength, q_out);
+        q_out = duct.propagate(q_out);
+        w = GaussianBeam::calc_beam_waist(wavelength, q_out);
         fout<<q_out.real()<<','<<q_out.imag()<<","<<w<<'\n';
-        // fout<<q_out<<","<<w0<<'\n';
     }
 
     // closing output file
