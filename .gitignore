@@ -1,0 +1,11 @@
+*.cmake
+CMakeFiles*
+*.bin
+*.json
+*.out
+*.zip
+*.txt
+!CMakeLists.txt
+!params.txt
+Makefile
+gaussian_duct
