@@ -25,7 +25,7 @@ public:
      * 
      * @return q parameter at output
      */
-    std::complex<double> calc_q_out(double n0, std::complex<double> qin);
+    std::complex<double> calc_q_out(std::complex<double> qin, double n0);
 };
 
 #endif

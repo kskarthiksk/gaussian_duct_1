@@ -25,7 +25,7 @@ void GaussianDuct::initialize_matrix()
 
 std::complex<double> GaussianDuct::propagate(std::complex<double> qin)
 {
-    return calc_q_out(n0, qin);
+    return calc_q_out(qin, n0);
 }
 
 void GaussianDuct::set_length(double length)

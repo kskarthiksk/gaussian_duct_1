@@ -5,7 +5,7 @@ using namespace std;
 
 double GaussianBeam::calc_beam_waist(double wavelength, std::complex<double> q)
 {
-    double w0 = wavelength / M_PI * q.imag();
+    double w0 = (wavelength / M_PI) * q.imag();
     return w0;
 }
 
