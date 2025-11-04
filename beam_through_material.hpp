@@ -1,22 +1,24 @@
-#ifndef BEAM_THROUGH_DUCT_H
-#define BEAM_THROUGH_DUCT_H
+#ifndef BEAM_THROUGH_MATERIAL_H
+#define BEAM_THROUGH_MATERIAL_H
 
-#include "gaussian_duct.hpp"
+#include "propagation_material.hpp"
 #include "gaussian_beam.hpp"
 
 #include <fstream>
 
 using namespace std;
 
-class BeamThroughDuct
+class BeamThroughMaterial
 {
-    double n0, n2;              // refractive indices
-    double duct_length;         // [m] length of gaussian duct
+    double n0;                  // refractive index of material
+    double n2;                  // n(x) = n0 - 1/2 * n2 * x^2 if material is a gaussian duct (material_type = 1)
+    double propagation_length;  // [m] length of material
     double wavelength;          // [m] wavelength of light
     int iter;                   // number of iterations
     double w0;                  // [m] beam waist
     double distance_from_waist; // [m] location relative to beam waist
     complex<double> qin;        // q parameter of the beam
+    int material_type;               // integer denoting type of material. 0: Free space 1: Gaussian duct
 
 public:
     /**
@@ -26,7 +28,7 @@ public:
      * 
      * @param file File object containing variables
      */
-    BeamThroughDuct(ifstream& fin);
+    BeamThroughMaterial(ifstream& fin);
 
     /**
      * @brief Run simulation

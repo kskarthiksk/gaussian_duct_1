@@ -11,6 +11,6 @@ double GaussianBeam::calc_beam_waist(double wavelength, std::complex<double> q)
 
 double GaussianBeam::calc_beam_radius(double wavelength, std::complex<double> q)
 {
-    double w = wavelength / M_PI * (q.imag() + (q.real() * q.real())/q.imag());
-    return w;
+    double r = (wavelength / M_PI) * (q.imag() + (q.real() * q.real())/q.imag());
+    return r;
 }

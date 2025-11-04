@@ -6,6 +6,7 @@ CMakeFiles*
 *.zip
 *.txt
 !CMakeLists.txt
-!params.txt
+!params0.txt
+!params1.txt
 Makefile
 gaussian_duct
