@@ -2,7 +2,7 @@ material 0
 n0	1
 n2	0
 propagation_length	1000e-6
-wavelength	500e-09
-iterations	20
-w0	200e-6
-distance_from_waist	0
+wavelength	1064e-09
+iterations	10
+w0	9.698575484700834e-06
+distance_from_waist	2e-3

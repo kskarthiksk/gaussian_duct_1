@@ -26,11 +26,20 @@ void Material::initialize_matrix()
     else if(material_type == 1)  // gaussian duct
     {
         double gamma = sqrt(n2 / n0);    // gamma parameter (sqrt(n2/n0))
-
-        A = cos(gamma * z);
-        B = sin(gamma * z) / (n0 * gamma);
-        C = -(n0 * gamma) * sin(gamma * z);
-        D = cos(gamma * z);
+        if(gamma != 0)
+        {
+            A = cos(gamma * z);
+            B = sin(gamma * z) / (n0 * gamma);
+            C = -(n0 * gamma) * sin(gamma * z);
+            D = cos(gamma * z);
+        }
+        else
+        {
+            A = 1;
+            B = z/n0;
+            C = 0;
+            D = 1;
+        }
     }
 }
 

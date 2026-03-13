@@ -29,6 +29,8 @@ BeamThroughMaterial::BeamThroughMaterial(ifstream& fin)
             fin>>distance_from_waist;
     }
 
+    wavelength /= n0;
+
     if(material_type == 0)
         n2 = 0;
 
