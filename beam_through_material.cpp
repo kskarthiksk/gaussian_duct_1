@@ -1,38 +1,41 @@
 #include "beam_through_material.hpp"
 
 #include <iomanip>
+#include <map>
+#include <sstream>
 
 using namespace std;
 
 BeamThroughMaterial::BeamThroughMaterial(ifstream& fin)
 {
-    string str; // string to read key
 
-    while(!fin.eof())
+    string line;                // variable to store a line in the param file
+    map<string, double> params; // map to store parameters as key-value pairs
+
+    // reading file line by line and storing parameters into the map
+    while(getline(fin, line))
     {
-        fin>>str;
-        if(str == "material")
-            fin>>material_type;
-        else if(str == "n0")
-            fin>>n0;
-        else if(str == "n2")
-            fin>>n2;
-        else if(str == "propagation_length")
-            fin>>propagation_length;
-        else if(str == "wavelength")
-            fin>>wavelength;
-        else if(str == "iterations")
-            fin>>iter;
-        else if(str == "w0")
-            fin>>w0;
-        else if(str == "distance_from_waist")
-            fin>>distance_from_waist;
-        else if(str == "a0")
-            fin>>a0;
-        else if(str == "a2")
-            fin>>a2;
+        istringstream parameter(line);
+        string key;
+        parameter>>key;
+        if(key[0] == '#' || key[0] == '\0')
+            continue;
+        double value;
+        parameter>>value;
+        params[key] = value;
     }
 
+    // saving parameters into member variables
+    material_type = params["material"];
+    n0 = params["n0"];
+    n2 = params["n2"];
+    a0 = params["a0"];
+    a2 = params["a2"];
+    propagation_length = params["propagation_length"];
+    wavelength = params["wavelength"];
+    iter = params["iterations"];
+    w0 = params["w0"];
+    distance_from_waist = params["distance_from_waist"];
     wavelength /= n0;
 
     if(material_type == 0)
