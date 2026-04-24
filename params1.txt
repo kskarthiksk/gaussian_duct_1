@@ -1,8 +1,10 @@
 material 1
-n0	1.6
-n2	10000
-propagation_length	2e-3
-wavelength	1064e-09
-iterations	10
-w0	9.698575484700834e-06
+n0	1
+n2	0
+a0  0
+a2  0
+propagation_length	1e-3
+wavelength	1064e-9
+iterations	240
+w0	0.0006773633813521525
 distance_from_waist	2e-3

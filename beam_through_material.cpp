@@ -27,6 +27,10 @@ BeamThroughMaterial::BeamThroughMaterial(ifstream& fin)
             fin>>w0;
         else if(str == "distance_from_waist")
             fin>>distance_from_waist;
+        else if(str == "a0")
+            fin>>a0;
+        else if(str == "a2")
+            fin>>a2;
     }
 
     wavelength /= n0;
