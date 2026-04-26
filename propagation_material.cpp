@@ -4,10 +4,13 @@
 
 using namespace std;
 
-Material::Material(double n_0, double n_2, double length, int material) : TransferMatrix::TransferMatrix()
+Material::Material(double n_0, double n_2, double a_0, double a_2, double wavelength, double length, int material) : TransferMatrix::TransferMatrix()
 {
     n0 = n_0;
     n2 = n_2;
+    a0 = a_0;
+    a2 = a_2;
+    wavelength = wavelength;
     z = length;
     material_type = material;
 
@@ -25,13 +28,14 @@ void Material::initialize_matrix()
     }
     else if(material_type == 1)  // gaussian duct
     {
-        double gamma = sqrt(n2 / n0);    // gamma parameter (sqrt(n2/n0))
-        if(gamma != 0)
+        complex<double> gamma = sqrt(complex<double>(n2/n0, (wavelength * a2) / (2* M_PI * n0)));    // gamma parameter
+        
+        if(abs(gamma)!= 0)
         {
-            A = cos(gamma * z);
-            B = sin(gamma * z) / (n0 * gamma);
-            C = -(n0 * gamma) * sin(gamma * z);
-            D = cos(gamma * z);
+            A = complex<double> (cos(gamma.real()*z) * cosh(gamma.imag()*z), -sin(gamma.real()*z) * sinh(gamma.imag()*z));
+            B = complex<double> (sin(gamma.real()*z) * cosh(gamma.imag()*z), cos(gamma.real()*z) * sinh(gamma.imag()*z)) / (n0 * gamma);
+            C = -(n0 * gamma) * complex<double> (sin(gamma.real()*z) * cosh(gamma.imag()*z), cos(gamma.real()*z) * sinh(gamma.imag()*z));
+            D = complex<double> (cos(gamma.real()*z) * cosh(gamma.imag()*z), -sin(gamma.real()*z) * sinh(gamma.imag()*z));
         }
         else
         {

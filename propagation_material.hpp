@@ -12,10 +12,13 @@
  */
 class Material : public TransferMatrix
 {
-    double n0;  // Central refractive index of material
-    double n2;  // n(x) = n0 - 1/2 * n2 * x^2 if material is a gaussian duct (material_type = 1)
-    double z;   // [m] Length of the material
-    int material_type;   // Integer denoting type of material. 0: Free space 1: Gaussian duct
+    double n0;          // Central refractive index of material
+    double n2;          // n(x) = n0 - 1/2 * n2 * x^2 if material is a gaussian duct (material_type = 1)
+    double a0;          // On axis loss/gain
+    double a2;          // Transverse component of loss/gain
+    double wavelength;  // [m] wavelength of light
+    double z;           // [m] Length of the material
+    int material_type;  // Integer denoting type of material. 0: Free space 1: Gaussian duct
 
     /**
      * @brief Initializes the ABCD matrix according to the type of material
@@ -32,7 +35,13 @@ class Material : public TransferMatrix
      * 
      * @param n_0 Central refractive index of material
      * 
-     * @param n_2 n(x) = n0 - 1/2 * n2 * x^2 if material is a gaussian duct (material_type = 1)
+     * @param n_2 [mm^-2] n(x) = n0 - 1/2 * n2 * x^2 if material is a gaussian duct (material_type = 1)
+     * 
+     * @param a_0 On axis loss/gain
+     * 
+     * @param a_2 Transverse component of loss/gain
+     * 
+     * @param wavelength [m] wavelength of light
      * 
      * @param length [m] Length of the material
      * 
@@ -40,7 +49,7 @@ class Material : public TransferMatrix
      * 0: Free space
      * 1: Gaussian duct
      */
-    Material(double n_0, double n_2, double length, int material);
+    Material(double n_0, double n_2, double a_0, double a_2, double wavelength, double length, int material);
 
     /**
      * @brief Function to calculate q_out after travelling through the material
@@ -83,5 +92,33 @@ class Material : public TransferMatrix
      */
     void set_material(int material_type);
 };
+
+// Source - https://stackoverflow.com/a/51555176
+// Posted by tesch1
+// Retrieved (with modifications) 2026-04-26, License - CC BY-SA 4.0
+
+// Trick to allow type promotion below
+template <typename T>
+struct identity_t { typedef T type; };
+
+/// Make working with std::complex<> nubmers better... allow promotion.
+#define COMPLEX_OPS(OP)                                                 \
+  template <typename _Tp>                                               \
+  std::complex<_Tp>                                                     \
+  operator OP(std::complex<_Tp> lhs, const typename identity_t<_Tp>::type & rhs) \
+  {                                                                     \
+    return lhs OP rhs;                                                  \
+  }                                                                     \
+  template <typename _Tp>                                               \
+  std::complex<_Tp>                                                     \
+  operator OP(const typename identity_t<_Tp>::type & lhs, const std::complex<_Tp> & rhs) \
+  {                                                                     \
+    return lhs OP rhs;                                                  \
+  }
+COMPLEX_OPS(+)
+COMPLEX_OPS(-)
+COMPLEX_OPS(*)
+COMPLEX_OPS(/)
+#undef COMPLEX_OPS
 
 #endif

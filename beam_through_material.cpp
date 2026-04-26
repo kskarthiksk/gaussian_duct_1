@@ -50,7 +50,7 @@ BeamThroughMaterial::BeamThroughMaterial(ifstream& fin)
 void BeamThroughMaterial::run(ofstream& fout)
 {
     // TransferMatrix object
-    Material material = Material(n0, n2, propagation_length, material_type);
+    Material material = Material(n0, n2, a0, a2, wavelength, propagation_length, material_type);
 
     complex<double> q_out = qin;    // output q parameter after each iteration
     double w;                       // [m] beam waist after each iteration

@@ -10,3 +10,4 @@ CMakeFiles*
 !params1.txt
 Makefile
 gaussian_duct
+test.cc
