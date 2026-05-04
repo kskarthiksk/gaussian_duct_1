@@ -4,13 +4,13 @@
 
 using namespace std;
 
-Material::Material(double n_0, double n_2, double a_0, double a_2, double wavelength, double length, int material) : TransferMatrix::TransferMatrix()
+Material::Material(double n_0, double n_2, double a_0, double a_2, double lambda, double length, int material) : TransferMatrix::TransferMatrix()
 {
     n0 = n_0;
     n2 = n_2;
     a0 = a_0;
     a2 = a_2;
-    wavelength = wavelength;
+    wavelength = lambda;
     z = length;
     material_type = material;
 
@@ -28,14 +28,18 @@ void Material::initialize_matrix()
     }
     else if(material_type == 1)  // gaussian duct
     {
-        complex<double> gamma = sqrt(complex<double>(n2/n0, (wavelength * a2) / (2* M_PI * n0)));    // gamma parameter
+        complex<double> gamma = sqrt(complex<double>(n2/n0, (wavelength * a2) / (2* M_PI)));    // gamma parameter
         
         if(abs(gamma)!= 0)
         {
-            A = complex<double> (cos(gamma.real()*z) * cosh(gamma.imag()*z), -sin(gamma.real()*z) * sinh(gamma.imag()*z));
-            B = complex<double> (sin(gamma.real()*z) * cosh(gamma.imag()*z), cos(gamma.real()*z) * sinh(gamma.imag()*z)) / (n0 * gamma);
-            C = -(n0 * gamma) * complex<double> (sin(gamma.real()*z) * cosh(gamma.imag()*z), cos(gamma.real()*z) * sinh(gamma.imag()*z));
-            D = complex<double> (cos(gamma.real()*z) * cosh(gamma.imag()*z), -sin(gamma.real()*z) * sinh(gamma.imag()*z));
+            // A = complex<double> (cos(gamma.real()*z) * cosh(gamma.imag()*z), -sin(gamma.real()*z) * sinh(gamma.imag()*z));
+            // B = complex<double> (sin(gamma.real()*z) * cosh(gamma.imag()*z), cos(gamma.real()*z) * sinh(gamma.imag()*z)) / (n0 * gamma);
+            // C = -(n0 * gamma) * complex<double> (sin(gamma.real()*z) * cosh(gamma.imag()*z), cos(gamma.real()*z) * sinh(gamma.imag()*z));
+            // D = complex<double> (cos(gamma.real()*z) * cosh(gamma.imag()*z), -sin(gamma.real()*z) * sinh(gamma.imag()*z));
+            A = cos(gamma * z);
+            B = sin(gamma * z) / (n0 * gamma);
+            C = -n0 * gamma * sin(gamma);
+            D = cos(gamma);
         }
         else
         {
