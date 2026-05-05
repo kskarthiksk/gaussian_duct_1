@@ -1,6 +1,9 @@
 material 1
-n0	1
-n2	0
+amplitude   1
+n0_real	1
+n0_imag 0
+n2_real	0
+n2_imag -0.005
 a0  0
 a2  2e5
 propagation_length	1e-3

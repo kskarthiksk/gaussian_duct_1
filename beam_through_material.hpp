@@ -10,10 +10,8 @@ using namespace std;
 
 class BeamThroughMaterial
 {
-    double n0;                  // refractive index of material
-    double n2;                  // n(x) = n0 - 1/2 * n2 * x^2 if material is a gaussian duct (material_type = 1)
-    double a0;                  // On axis loss/gain
-    double a2;                  // Transverse component of loss/gain
+    complex<double> n0;         // (complex) refractive index of material
+    complex<double> n2;         // n(x) = n0 - 1/2 * n2 * x^2 if material is a gaussian duct (material_type = 1)
     double propagation_length;  // [m] length of material
     double wavelength;          // [m] wavelength of light
     int iter;                   // number of iterations

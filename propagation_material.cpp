@@ -4,12 +4,10 @@
 
 using namespace std;
 
-Material::Material(double n_0, double n_2, double a_0, double a_2, double lambda, double length, int material) : TransferMatrix::TransferMatrix()
+Material::Material(complex<double> n_0, complex<double> n_2, double lambda, double length, int material) : TransferMatrix::TransferMatrix()
 {
     n0 = n_0;
     n2 = n_2;
-    a0 = a_0;
-    a2 = a_2;
     wavelength = lambda;
     z = length;
     material_type = material;
@@ -28,7 +26,7 @@ void Material::initialize_matrix()
     }
     else if(material_type == 1)  // gaussian duct
     {
-        complex<double> gamma = sqrt(complex<double>(n2/n0, (wavelength * a2) / (2* M_PI)));    // gamma parameter
+        complex<double> gamma = sqrt(n2/n0);    // gamma parameter
         
         if(abs(gamma)!= 0)
         {

@@ -12,10 +12,8 @@
  */
 class Material : public TransferMatrix
 {
-    double n0;          // Central refractive index of material
-    double n2;          // n(x) = n0 - 1/2 * n2 * x^2 if material is a gaussian duct (material_type = 1)
-    double a0;          // On axis loss/gain
-    double a2;          // Transverse component of loss/gain
+    std::complex<double> n0;          // Central refractive index of material
+    std::complex<double> n2;          // n(x) = n0 - 1/2 * n2 * x^2 if material is a gaussian duct (material_type = 1)
     double wavelength;  // [m] wavelength of light
     double z;           // [m] Length of the material
     int material_type;  // Integer denoting type of material. 0: Free space 1: Gaussian duct
@@ -37,10 +35,6 @@ class Material : public TransferMatrix
      * 
      * @param n_2 [mm^-2] n(x) = n0 - 1/2 * n2 * x^2 if material is a gaussian duct (material_type = 1)
      * 
-     * @param a_0 On axis loss/gain
-     * 
-     * @param a_2 Transverse component of loss/gain
-     * 
      * @param wavelength [m] wavelength of light
      * 
      * @param length [m] Length of the material
@@ -49,7 +43,7 @@ class Material : public TransferMatrix
      * 0: Free space
      * 1: Gaussian duct
      */
-    Material(double n_0, double n_2, double a_0, double a_2, double wavelength, double length, int material);
+    Material(std::complex<double> n_0, std::complex<double> n_2, double wavelength, double length, int material);
 
     /**
      * @brief Function to calculate q_out after travelling through the material

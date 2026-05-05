@@ -27,16 +27,16 @@ BeamThroughMaterial::BeamThroughMaterial(ifstream& fin)
 
     // saving parameters into member variables
     material_type = params["material"];
-    n0 = params["n0"];
-    n2 = params["n2"];
-    a0 = params["a0"];
-    a2 = params["a2"];
+    n0.real(params["n0_real"]);
+    n0.imag(params["n0_imag"]);
+    n2.real(params["n2_real"]);
+    n2.imag(params["n2_imag"]);
     propagation_length = params["propagation_length"];
     wavelength = params["wavelength"];
     iter = params["iterations"];
     w0 = params["w0"];
     distance_from_waist = params["distance_from_waist"];
-    wavelength /= n0;
+    wavelength /= n0.real();
 
     if(material_type == 0)
         n2 = 0;
@@ -50,7 +50,7 @@ BeamThroughMaterial::BeamThroughMaterial(ifstream& fin)
 void BeamThroughMaterial::run(ofstream& fout)
 {
     // TransferMatrix object
-    Material material = Material(n0, n2, a0, a2, wavelength, propagation_length, material_type);
+    Material material = Material(n0, n2, wavelength, propagation_length, material_type);
 
     complex<double> q_out = qin;    // output q parameter after each iteration
     double w;                       // [m] beam waist after each iteration

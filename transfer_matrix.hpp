@@ -19,13 +19,13 @@ public:
      * 
      * Takes in q and calculates q_out after a distance z through the Gaussian duct
      * 
-     * @param  n0 refractive index at the center of Gaussian duct
+     * @param  n0 (complex) refractive index at the center of Gaussian duct
      * 
      * @param qin q parameter at input
      * 
      * @return q parameter at output
      */
-    std::complex<double> calc_q_out(std::complex<double> qin, double n0);
+    std::complex<double> calc_q_out(std::complex<double> qin, std::complex<double> n0);
 };
 
 #endif
