@@ -32,12 +32,15 @@ BeamThroughMaterial::BeamThroughMaterial(ifstream& fin)
     n2.real(params["n2_real"]);
     n2.imag(params["n2_imag"]);
     propagation_length = params["propagation_length"];
-    wavelength = params["wavelength"];
+    wavelength_0 = params["wavelength"];
     iter = params["iterations"];
-    w0 = params["w0"];
+    angle = params["angle"];
+    // w0 = params["w0"];
     distance_from_waist = params["distance_from_waist"];
-    wavelength /= n0.real();
+    wavelength = wavelength_0/n0.real();
 
+    angle = asin(sin(angle)/n0.real());
+    w0 = wavelength / (M_PI * tan(angle));
     if(material_type == 0)
         n2 = 0;
 
@@ -66,7 +69,7 @@ void BeamThroughMaterial::run(ofstream& fout)
     r = GaussianBeam::calc_beam_radius(wavelength, q_out);
 
     // adding initial values to file
-    fout<<q_out.real()<<','<<q_out.imag()<<','<<w0*w0<<','<<r<<'\n';
+    fout<<q_out.real()<<','<<q_out.imag()<<','<<w0<<','<<r<<'\n';
     
     for(int i = 0; i < iter; ++i)
     {

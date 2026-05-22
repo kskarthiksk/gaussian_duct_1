@@ -27,7 +27,6 @@ void Material::initialize_matrix()
     else if(material_type == 1)  // gaussian duct
     {
         complex<double> gamma = sqrt(n2/n0);    // gamma parameter
-        
         if(abs(gamma)!= 0)
         {
             // A = complex<double> (cos(gamma.real()*z) * cosh(gamma.imag()*z), -sin(gamma.real()*z) * sinh(gamma.imag()*z));
@@ -36,8 +35,8 @@ void Material::initialize_matrix()
             // D = complex<double> (cos(gamma.real()*z) * cosh(gamma.imag()*z), -sin(gamma.real()*z) * sinh(gamma.imag()*z));
             A = cos(gamma * z);
             B = sin(gamma * z) / (n0 * gamma);
-            C = -n0 * gamma * sin(gamma);
-            D = cos(gamma);
+            C = -n0 * gamma * sin(gamma*z);
+            D = cos(gamma*z);
         }
         else
         {

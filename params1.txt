@@ -1,13 +1,12 @@
 material 1
 amplitude   1
 n0_real	1
-n0_imag 0
+n0_imag 1e-6
 n2_real	0
-n2_imag -0.005
-a0  0
-a2  2e5
+n2_imag -1
 propagation_length	1e-3
 wavelength	1064e-9
 iterations	240
 w0	0.0006773633813521525
 distance_from_waist	2e-3
+angle 0.5e-3
