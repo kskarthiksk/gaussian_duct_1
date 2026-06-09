@@ -15,7 +15,8 @@ class BeamThroughMaterial
     double propagation_length;  // [m] length of material
     double wavelength_0;        // [m] wavelength of light
     double wavelength;          // [m] wavelength_0/n0
-    int iter;                   // number of iterations
+    int steps;                  // number of steps in z direction
+    double step_size;           // [m] step size in z direction (propagation_length/steps)
     double w0;                  // [m] beam waist
     double distance_from_waist; // [m] location relative to beam waist
     complex<double> qin;        // q parameter of the beam

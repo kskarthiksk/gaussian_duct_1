@@ -33,10 +33,11 @@ BeamThroughMaterial::BeamThroughMaterial(ifstream& fin)
     n2.imag(params["n2_imag"]);
     propagation_length = params["propagation_length"];
     wavelength_0 = params["wavelength"];
-    iter = params["iterations"];
+    steps = params["steps"];
     angle = params["angle"];
     // w0 = params["w0"];
     distance_from_waist = params["distance_from_waist"];
+    step_size = propagation_length/steps;
     wavelength = wavelength_0/n0.real();
 
     angle = asin(sin(angle)/n0.real());
@@ -53,7 +54,7 @@ BeamThroughMaterial::BeamThroughMaterial(ifstream& fin)
 void BeamThroughMaterial::run(ofstream& fout)
 {
     // TransferMatrix object
-    Material material = Material(n0, n2, wavelength, propagation_length, material_type);
+    Material material = Material(n0, n2, wavelength, step_size, material_type);
 
     complex<double> q_out = qin;    // output q parameter after each iteration
     double w;                       // [m] beam waist after each iteration
@@ -71,7 +72,7 @@ void BeamThroughMaterial::run(ofstream& fout)
     // adding initial values to file
     fout<<q_out.real()<<','<<q_out.imag()<<','<<w0<<','<<r<<'\n';
     
-    for(int i = 0; i < iter; ++i)
+    for(int i = 0; i < steps; ++i)
     {
         q_out = material.propagate(q_out);
         w = GaussianBeam::calc_beam_waist(wavelength, q_out);
