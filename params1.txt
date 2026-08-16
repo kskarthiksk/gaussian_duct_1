@@ -2,11 +2,11 @@ material 1
 amplitude   1
 n0_real	1.6
 n0_imag 0
-n2_real	100
+n2_real	0
 n2_imag 0
-propagation_length	720e-3
+propagation_length	120e-3
 wavelength	1064e-9
-steps 720
+steps 120
 w0	0.0006773633813521525
 distance_from_waist	2e-3
 angle 0.5e-3
