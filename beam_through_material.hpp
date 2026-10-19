@@ -15,6 +15,7 @@ class BeamThroughMaterial
     double propagation_length;  // [m] length of material
     double wavelength_0;        // [m] wavelength of light
     double wavelength;          // [m] wavelength_0/n0
+    double amp_0;               // initial amplitude
     int steps;                  // number of steps in z direction
     double step_size;           // [m] step size in z direction (propagation_length/steps)
     double w0;                  // [m] beam waist

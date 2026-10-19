@@ -31,6 +31,14 @@ public:
      * @return w [m] beam radius
      */
     static double calc_beam_radius(double wavelength, std::complex<double> q);
+
+    /**
+     * @brief calculates fwhm from beam radius
+     * 
+     * @param beam_radius beam radius
+     * @return fwhm, full width half maximum of beam
+     */
+    static double calc_fwhm(double beam_radius);
 };
 
 #endif

@@ -90,7 +90,7 @@ def semi_analytical_asm(E, z, k2, Nx, dx, x):
     residual_phase = phase - phase_quad_inv
 
     U = np.abs(E) * np.exp(1j * residual_phase)
-    Cxx = -1/4*Cxx_inv
+    Cxx = -1/(4*Cxx_inv)
     phase_quad = Cxx*x*x
 
     alpha_inv = np.sqrt(1j / (2*Cxx_inv))

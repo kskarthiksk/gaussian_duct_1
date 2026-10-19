@@ -1,5 +1,7 @@
 #include "beam_through_material.hpp"
+#include "gaussian_beam.hpp"
 
+#include <complex>
 #include <iomanip>
 #include <map>
 #include <sstream>
@@ -28,16 +30,26 @@ BeamThroughMaterial::BeamThroughMaterial(ifstream& fin)
     // saving parameters into member variables
     material_type = params["material"];
     n0.real(params["n0_real"]);
-    n0.imag(params["n0_imag"]);
+    
     n2.real(params["n2_real"]);
-    n2.imag(params["n2_imag"]);
-    propagation_length = params["propagation_length"];
+    
+    propagation_length = params["zScreen"];
     wavelength_0 = params["wavelength"];
+    n0.imag((params["g0"] - params["a0"]) * wavelength_0 / (2 * M_PI));
+    n2.imag((params["g2"] - params["a2"]) * wavelength_0 / (2 * M_PI));
+    if (n2 != std::complex<double>(0,0))
+        material_type = 1;
     steps = params["steps"];
     angle = params["angle"];
+    amp_0 = params["amplitude"];
     // w0 = params["w0"];
-    distance_from_waist = params["distance_from_waist"];
+    distance_from_waist = -params["zw"];
     step_size = propagation_length/steps;
+    if(step_size > 1)
+    {
+        step_size = 1;
+        steps = propagation_length;
+    }
     wavelength = wavelength_0/n0.real();
 
     angle = asin(sin(angle)/n0.real());
@@ -54,29 +66,34 @@ BeamThroughMaterial::BeamThroughMaterial(ifstream& fin)
 void BeamThroughMaterial::run(ofstream& fout)
 {
     // TransferMatrix object
-    Material material = Material(n0, n2, wavelength, step_size, material_type);
+    Material material = Material(n0, n2, wavelength_0, step_size, material_type, amp_0);
 
     complex<double> q_out = qin;    // output q parameter after each iteration
     double w;                       // [m] beam waist after each iteration
     double r;                       // [m] beam radius after each iteration
+    double amp = amp_0;             // amplitude after each iteration
+    double fwhm;                    // fwhm after each iteration
 
     // adding column titles
-    fout<<"q param real,q param imag,beam waist,beam radius\n";
+    fout<<"q param real,q param imag,beam waist,beam radius,fwhm,amplitude\n";
 
 
     int limit {numeric_limits<double>::digits10};
     fout<<fixed<<setprecision(limit);
 
     r = GaussianBeam::calc_beam_radius(wavelength, q_out);
+    fwhm = GaussianBeam::calc_fwhm(r);
 
     // adding initial values to file
-    fout<<q_out.real()<<','<<q_out.imag()<<','<<w0<<','<<r<<'\n';
+    fout<<q_out.real()<<','<<q_out.imag()<<','<<w0<<','<<r<<','<<fwhm<<','<<amp<<'\n';
     
     for(int i = 0; i < steps; ++i)
     {
+        amp = material.calc_amplitude(q_out);
         q_out = material.propagate(q_out);
         w = GaussianBeam::calc_beam_waist(wavelength, q_out);
         r = GaussianBeam::calc_beam_radius(wavelength, q_out);
-        fout<<q_out.real()<<','<<q_out.imag()<<','<<w<<','<<r<<'\n';
+        fwhm = GaussianBeam::calc_fwhm(r);
+        fout<<q_out.real()<<','<<q_out.imag()<<','<<w<<','<<r<<','<<fwhm<<','<<amp<<'\n';
     }
 }

@@ -14,3 +14,8 @@ double GaussianBeam::calc_beam_radius(double wavelength, std::complex<double> q)
     double r = (wavelength / M_PI) * (q.imag() + (q.real() * q.real())/q.imag());
     return sqrt(r);
 }
+
+double GaussianBeam::calc_fwhm(double beam_radius)
+{
+    return beam_radius * sqrt(-2*log(0.5));
+}

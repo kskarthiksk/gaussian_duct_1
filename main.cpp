@@ -9,7 +9,8 @@ using namespace std;
 int main()
 {
     ifstream fin;   // filestream for input parameters
-    fin.open("params1.txt", ios::in);
+    // fin.open("params1.txt", ios::in);
+    fin.open("/home/karthik/Desktop/Thesis/UGBlocks_V4_Oct_21_2025/program2D/para.dat", ios::in);
     BeamThroughMaterial simulation = BeamThroughMaterial(fin);
     fin.close();    // closing input file
 

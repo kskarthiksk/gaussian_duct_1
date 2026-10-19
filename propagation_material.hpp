@@ -2,6 +2,7 @@
 #define MATERIAL_H
 
 #include "transfer_matrix.hpp"
+#include <complex>
 
 /**
  * @brief Class implementing a material
@@ -14,9 +15,12 @@ class Material : public TransferMatrix
 {
     std::complex<double> n0;          // Central refractive index of material
     std::complex<double> n2;          // n(x) = n0 - 1/2 * n2 * x^2 if material is a gaussian duct (material_type = 1)
+    std::complex<double> q0;          // initial q pararameter, for amplitude calculation
     double wavelength;  // [m] wavelength of light
+    std::complex<double> wavenumber;  // [m] wavenumber of light
     double z;           // [m] Length of the material
     int material_type;  // Integer denoting type of material. 0: Free space 1: Gaussian duct
+    std::complex<double> amp_0, amp;  // initial amplitude
 
     /**
      * @brief Initializes the ABCD matrix according to the type of material
@@ -34,6 +38,8 @@ class Material : public TransferMatrix
      * @param n_0 Central refractive index of material
      * 
      * @param n_2 [mm^-2] n(x) = n0 - 1/2 * n2 * x^2 if material is a gaussian duct (material_type = 1)
+     *
+     * @param q_in initial value of q pararameter, for amplitude calculation
      * 
      * @param wavelength [m] wavelength of light
      * 
@@ -43,7 +49,7 @@ class Material : public TransferMatrix
      * 0: Free space
      * 1: Gaussian duct
      */
-    Material(std::complex<double> n_0, std::complex<double> n_2, double wavelength, double length, int material);
+    Material(std::complex<double> n_0, std::complex<double> n_2, double wavelength, double length, int material, double amp);
 
     /**
      * @brief Function to calculate q_out after travelling through the material
@@ -85,6 +91,15 @@ class Material : public TransferMatrix
      * 1: Gaussian duct
      */
     void set_material(int material_type);
+
+    /**
+     * @brief 
+     * 
+     * @param q0 
+     * @param iter 
+     * @return double max amplitude of the beam
+     */
+    double calc_amplitude(std::complex<double> qin);
 };
 
 // Source - https://stackoverflow.com/a/51555176

@@ -1,0 +1,10 @@
+# ninja log v7
+7	850	1788455699725518647	CMakeFiles/gaussian_duct.dir/gaussian_beam.cpp.o	ed5405c37d87aed2
+6	731	1788455699724518658	CMakeFiles/gaussian_duct.dir/free_space.cpp.o	a61c70586a91e636
+5	716	1788512470606804620	CMakeFiles/gaussian_duct.dir/beam_through_material.cpp.o	9582e4eaad55177
+734	1267	1788455700452510518	CMakeFiles/gaussian_duct.dir/main.cpp.o	32c344be863913ea
+23	587	1788455832834028899	CMakeFiles/gaussian_duct.dir/propagation_material.cpp.o	7fa1917d91092c93
+1041	1467	1788455700759507086	CMakeFiles/gaussian_duct.dir/transfer_matrix.cpp.o	e548e962c9066af7
+716	784	1788512471317820288	gaussian_duct	f11e512d5d4a0b7b
+3	99	1788879940485486409	build.ninja	51453bed2f345614
+3	99	1788879940482699760	/home/karthik/Desktop/Thesis/gaussian_duct_1/cmake_install.cmake	51453bed2f345614
