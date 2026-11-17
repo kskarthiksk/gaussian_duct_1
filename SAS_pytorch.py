@@ -99,6 +99,7 @@ def scalable_angular_spectrum(psi, z, lbd, L, device=device, skip_final_phase=Tr
     H_Fr = 1 - torch.abs(f_x * lbd)**2 / 2 - torch.abs(f_y * lbd)**2 / 2
     delta_H = W * torch.exp(1j * k * z * (H_AS - H_Fr))
 
+
     # apply precompensation
     psi_precomp = torch.fft.ifft2(torch.fft.fft2(torch.fft.ifftshift(psi_p, dim=(-1, -2)))\
                                   * delta_H)

@@ -22,9 +22,9 @@ def angular_spectrum_method(E, z, k2, Nx, dx):
     argument = k2 - kx*kx - ky*ky
 
     #Calculate the propagating and the evanescent (complex) modes
-    tmp = np.sqrt(argument)
-    # kz = np.where(argument >= 0, tmp, 1j*tmp)
-    kz = tmp
+    tmp = np.sqrt(0j + argument)
+    kz = np.where(argument >= 0, tmp, 1j*tmp)
+    # kz = tmp
 
     # propagate the angular spectrum a distance z
     E = scipy.fft.ifft2(scipy.fft.ifftshift(c * np.exp(1j * kz* z)))

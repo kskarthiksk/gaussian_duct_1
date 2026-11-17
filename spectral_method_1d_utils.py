@@ -21,8 +21,8 @@ def angular_spectrum_method(E, z, k2, Nx, dx):
 
     #Calculate the propagating and the evanescent (complex) modes
     tmp = np.sqrt(argument)
-    # kz = np.where(argument >= 0, tmp, 1j*tmp)
-    kz = tmp
+    kz = np.where(argument >= 0, tmp, 1j*tmp)
+    # kz = tmp
 
     # propagate the angular spectrum a distance z
     E = scipy.fft.ifft(scipy.fft.ifftshift(c * np.exp(1j * kz* z)))
